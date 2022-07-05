@@ -1,0 +1,4 @@
+node_modules/
+bugged/
+.env
+ecosystem.config.js

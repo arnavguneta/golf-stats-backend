@@ -1,0 +1,24 @@
+{
+  "name": "golf-stats",
+  "version": "1.0.0",
+  "description": "A website made using the MERN stack to track golf practice statistics overtime.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "env-cmd nodemon src/app.js -e js,hbs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "nodemon": "^2.0.18"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.4.2"
+  }
+}

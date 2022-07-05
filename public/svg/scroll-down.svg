@@ -1,0 +1,19 @@
+<svg width="55" height="155" viewBox="0 0 55 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="mouse">
+<path id="Line 2" d="M50 24V61" stroke="#F9F9F9" stroke-width="3"/>
+<path id="Line 3" d="M4 24L4 61" stroke="#F9F9F9" stroke-width="3"/>
+<path id="Ellipse 1 (Stroke)" d="M4 61C4 72.093 11 81 27 81C43 81 50 72.093 50 61" stroke="#F9F9F9" stroke-width="3"/>
+<path id="Ellipse 1 (Stroke)_2" d="M50 24C50 12.907 43 4 27 4C11 4 4 12.907 4 24" stroke="#F9F9F9" stroke-width="3"/>
+<g id="wheel">
+<path id="Vector 2" d="M27 27C28.4939 26.9905 28.944 25.7168 29 21C28.944 16.2832 28.4939 15.0095 27 15C25.5061 15.0095 25.056 16.2832 25 21C25.056 25.7168 25.5061 26.9905 27 27Z" fill="#F9F9F9" stroke="#F9F9F9"/>
+</g>
+<g id="top-arrow">
+<path id="Line 4 (Stroke)" fill-rule="evenodd" clip-rule="evenodd" d="M27 111.707L14 98.7071L14.7071 98L27.7071 111L27 111.707Z" stroke="#F9F9F9" stroke-width="2"/>
+<path id="Line 5 (Stroke)" fill-rule="evenodd" clip-rule="evenodd" d="M27 111.707L40 98.7071L39.2929 98L26.2929 111L27 111.707Z" stroke="#F9F9F9" stroke-width="2"/>
+</g>
+<g id="bottom-arrow">
+<path id="Line 4 (Stroke)_2" fill-rule="evenodd" clip-rule="evenodd" d="M27 131.707L14 118.707L14.7071 118L27.7071 131L27 131.707Z" stroke="#F9F9F9" stroke-width="2"/>
+<path id="Line 5 (Stroke)_2" fill-rule="evenodd" clip-rule="evenodd" d="M27 131.707L40 118.707L39.2929 118L26.2929 131L27 131.707Z" stroke="#F9F9F9" stroke-width="2"/>
+</g>
+</g>
+</svg>

@@ -1,0 +1,35 @@
+<header id="nav">
+    {{!-- <div class="side-logo-container"> --}}
+        <a href='/home' id="side-logo-wrap">{{>side_logo}}</a>
+        {{!--
+    </div> --}}
+    <nav>
+        <ul class="nav_links nav-closed">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/features">Features</a></li>
+            <li><a href="/home">Commands</a></li>
+            <li><a href="/help/setup">Help</a></li>
+            <li><a href="/support" target="_blank">Support Server</a></li>
+        </ul>
+    </nav>
+        {{#if data.authenticated}}
+        <div class="profile">
+            <div class="avatar" style="background-image: url({{data.avatar}});">
+            </div>
+            <span id="username">{{data.username}}</span>
+            <svg width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg" id="dropdown-arrow">
+                <path d="M0 0.75L5.5 6.25L11 0.75H0Z" fill="#F9F9F9" />
+            </svg>
+            <ul class="profile-dropdown profile-closed">
+                <li class="profile-item">Profile</li>
+                <li class="profile-item">My Servers</li>
+                <a href="/logout"><li class="profile-item logout">Logout</li></a>
+            </ul>
+        </div>
+        {{else}}
+        <a class="login" href={{data.LOGIN_URL}}><button>Login</button></a>
+        {{/if}}
+    <div class="burger-wrapper">
+        {{>burger}}
+    </div>
+</header>
