@@ -35,6 +35,11 @@ const sessionSchema = new mongoose.Schema({
         _id: false,
         type: Object, 
         required: true
+    },
+    expire_timer: {
+        _id: false, 
+        type: Object,
+        required: false
     }
 })
 

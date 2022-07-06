@@ -5,6 +5,9 @@ const router = express.Router()
 
 const apiPath = process.env.API_PATH || '/api/v1'
 
+// Note: session.end is more of a "last modified" type field which is compared to Date.now() on the frontend
+// If Date.now() is greater than session.end by 3600000 (1hr) we request to end the session
+
 // create a session for the appropriate user (on start)
 router.post(`${apiPath}/sessions/create/`, auth, async (req, res) => {
     try {
@@ -13,10 +16,11 @@ router.post(`${apiPath}/sessions/create/`, auth, async (req, res) => {
         session = new Session(req.body)
         session.user = req.user._id
         session.start = Date.now()
+        session.end = Date.now()
         await session.save()
         res.status(201).json(session)
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({ error: error.message, errorObj: error })
     }
 })
 
@@ -25,12 +29,11 @@ router.patch(`${apiPath}/sessions/end/`, auth, async (req, res) => {
     try {
         const session = await Session.findActiveSession(req.user._id)
         if (!session) throw new Error('No active session found')
-        session.end = Date.now()
         session.active = false
         await session.save()
         res.status(201).json(session)
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({ error: error.message })
     }
 })
 
@@ -38,14 +41,14 @@ router.patch(`${apiPath}/sessions/end/`, auth, async (req, res) => {
 router.patch(`${apiPath}/sessions/shot/:id/`, auth, async (req, res) => {
     try {
         const session = await Session.findOneAndUpdate(
-            {  user: req.user._id, active: true, "shots._id": req.params.id },
-            { $set: { "shots.$.hit": req.body.hit, "shots.$.yards": req.body.yards }}, 
-            { new: true } 
+            { user: req.user._id, active: true, "shots._id": req.params.id },
+            { $set: { "end": Date.now(), "shots.$.hit": req.body.hit, "shots.$.yards": req.body.yards } },
+            { new: true }
         );
         if (!session) throw new Error('No active session found for this user or no shot with the given id found')
         res.status(201).json(session)
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({ error: error.message })
     }
 })
 
@@ -54,11 +57,12 @@ router.patch(`${apiPath}/sessions/shot/`, auth, async (req, res) => {
     try {
         const session = await Session.findActiveSession(req.user._id)
         if (!session) throw new Error('No active session found')
+        session.end = Date.now()
         session.shots.push({ hit: req.body.hit, yards: req.body.yards })
         await session.save()
         res.status(201).json(session)
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({ error: error.message })
     }
 })
 
@@ -68,10 +72,11 @@ router.delete(`${apiPath}/sessions/shot/:id/`, auth, async (req, res) => {
         const session = await Session.findActiveSession(req.user._id)
         if (!session) throw new Error('No active session found')
         session.shots = session.shots.filter(shot => shot._id.toString() !== req.params.id)
+        session.end = Date.now()
         await session.save()
         res.status(201).json(session)
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({ error: error.message })
     }
 })
 
@@ -81,7 +86,7 @@ router.get(`${apiPath}/sessions/`, auth, async (req, res) => {
         const sessions = await Session.find({ user: req.user._id })
         res.json(sessions)
     } catch (error) {
-        res.status(500).json({error: error.message})
+        res.status(500).json({ error: error.message })
     }
 })
 
@@ -90,11 +95,25 @@ router.get(`${apiPath}/sessions/:id/`, auth, async (req, res) => {
     try {
         const session = await Session.findOne({ _id: req.params.id, user: req.user._id })
         if (!session) return res.status(404).send()
-        res.json(session)     
+        res.json(session)
     } catch (error) {
-        res.status(500).json({error: error.message})
+        res.status(500).json({ error: error.message })
     }
 })
+
+// auto expire session in an hour
+// const endSessionTimeout = (sessionID, userID, expire_timer) => {
+//     if (expire_timer) clearTimeout(expire_timer)
+//     const sessionTimer = setTimeout(() => {
+//         const activeSession = Session.findOne({ _id: sessionID, user: userID, active: true }).then(session => {
+//             if (!activeSession) throw new Error('No active session found when trying to end session via timeout')
+//             activeSession.end = Date.now()
+//             activeSession.active = false
+//             activeSession.save()
+//         }).catch(error => { console.log('Error when trying to end session via timeout', error.message) })
+//     }, '3600000')
+//     return sessionTimer
+// }
 
 // router.patch('/tasks/:id', async (req, res) => {
 //     const _id = req.params.id
