@@ -17,7 +17,7 @@ app.use(express.static(publicPath));
 
 app.use((req, res, next) => {
 	console.log(req.headers.origin)
-	const allowedOrigins = ['https://arnav.guneta.com/projects/golf','http://localhost:3004','http://localhost:3000'];
+	const allowedOrigins = ['https://arnav.guneta.com','http://localhost:3004','http://localhost:3000'];
 	const origin = req.headers.origin;
 	if (allowedOrigins.includes(origin)) {
 		 res.setHeader('Access-Control-Allow-Origin', origin);
