@@ -53,7 +53,7 @@ router.patch(`${apiPath}/sessions/shot/:id/`, auth, async (req, res) => {
 })
 
 // update session with shot information
-router.patch(`${apiPath}/sessions/shot/`, auth, async (req, res) => {
+router.post(`${apiPath}/sessions/shot/`, auth, async (req, res) => {
     try {
         const session = await Session.findActiveSession(req.user._id)
         if (!session) throw new Error('No active session found')
