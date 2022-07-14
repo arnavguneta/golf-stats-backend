@@ -35,7 +35,7 @@ app.use(sessionRouter)
 // React
 app.get("*", (req, res) => {
 	res.writeHead(302, {
-		'Location': '/'
+		'Location': '/projects/golf/'
 		//add other headers here...
 	  });
 	  res.end();
