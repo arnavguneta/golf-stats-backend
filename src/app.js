@@ -32,13 +32,14 @@ app.use((req, res, next) => {
 app.use(userRouter)
 app.use(sessionRouter)
 
-// React
-app.get("*", (req, res) => {
-	res.send('react goes here')
-	// res.sendFile(
-	// 	path.join(__dirname, "../client/build/index.html")
-	// );
-});
+// // React
+// app.get("*", (req, res) => {
+// 	res.writeHead(302, {
+// 		'Location': '/'
+// 		//add other headers here...
+// 	  });
+// 	  res.end();
+// });
 
 app.listen(port, () => {
 	console.log('[golf-stats] Server is up on port ' + port);
